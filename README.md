@@ -15,7 +15,7 @@ Esse desafio de dados consiste em provisionar dados para 3 finalidades diferente
     * Necessidade de acesso muito performático
 
 ## Explicações gerais 
-Dado o tempo para a solução do problema, irei explicar possiveis soluções para as 3 bases de dados e implementar apenas 1.
+Dado o tempo para a solução do problema, irei apenas explicar possiveis soluções para as 3 bases de dados .
 
 ## Questões gerais de segurança
 Para resolver os problemas de segurança paços padrões de segurança podem ser seguidos.
@@ -100,4 +100,17 @@ Para essa solução pode ser usado um banco como MongoDB ou DynamoDB, ou até me
 
 ![Arquitetura sugerida Base A](images/Arquitetura%20sugerida%20base%20C.png)
 
-Esse será o problema que eu irei resolver, por isso terá uma documentação dedicada.
+Esse é o problema que eu iniciei a resolução, por isso na pasta src do projeto tem alguns arquivos GO. Porém não tive tempo para deixar o projeto bem estruturado (muito menos funcional).
+
+## Especificações Base C
+
+- GET /events/:cpf
+    - CPF: chave, busca todos os ultimos eventos
+- PATCH /events/:cpf/:edventName
+    - CPF: chave
+    - eventName: podendo ser UltimaConsultaBureau, Movimentacao ou UltimaCompraCartao
+    - Body: conteudo do evento
+
+O patch busca do banco o valor atual e atualiza com o novo evento. Assim em toda busca, sempre o valor mais atualizado é encontrado, e a peprformance fica por parte do banco e indexação.
+
+Separando por funcionalidade (leitura-get, escrita-patch) a leitura pode ser escalada juntamente com o banco.

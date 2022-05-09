@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -39,7 +38,29 @@ func (repository *BaseCRepository) FindAll() (*[]interface{}, error) {
 	}
 	resp := new([]interface{})
 	res.All(ctx, resp)
-	fmt.Println("CONTENT: ", resp)
+	return resp, nil
+}
+
+func (repository *BaseCRepository) getCPFEvents(cpf string) *mongo.SingleResult {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	res := repository.collection.FindOne(ctx, bson.D{{"name", "pi"}})
+
+	return res
+}
+
+func (repository *BaseCRepository) UpdateCPFEvents(cpf string) (*[]interface{}, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	res, err := repository.collection.Find(ctx, bson.D{})
+
+	if err != nil {
+		return nil, err
+	}
+	resp := new([]interface{})
+	res.All(ctx, resp)
 	return resp, nil
 }
 

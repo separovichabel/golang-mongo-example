@@ -1,5 +1,7 @@
 package main
 
+import "go.mongodb.org/mongo-driver/mongo"
+
 type BaseCService struct {
 	config     *Config
 	repository *BaseCRepository
@@ -15,6 +17,11 @@ func (service *BaseCService) FindAll() *[]interface{} {
 	}
 
 	return resp
+}
+
+func (service *BaseCService) getEvents(cpf string) *mongo.SingleResult {
+
+	return service.repository.getCPFEvents(cpf)
 }
 
 func NewBaseCService(config *Config, repository *BaseCRepository) *BaseCService {
